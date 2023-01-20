@@ -1,0 +1,114 @@
+:root {
+    --vk-primary-color: #44195e;
+    --vk-secondary-color: #8eb897;
+    --vk-tertiary-color: #d3c0d2;
+    --vk-highlight-color: #FFCB47;
+
+    --vk-nav-toggler-color: var(--vk-highlight-color);
+    --vk-nav-toggler-glow: rgba(250, 225, 120, .55);
+
+    --vk-dark-color: #353831;
+    --vk-light-color: #d3c0d2;
+}
+
+/*START Sticky Footer */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    margin-top: 1rem;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+/*END Sticky Footer */
+
+/*START: Navbar Overrides  */
+
+.navbar-brand {
+    color: var(--vk-secondary-color);
+}
+
+#mainNav {
+    background-color: var(--vk-dark-color);
+    color: var(--vk-tertiary-color);
+}
+
+#mainNav button {
+    border-color: var(--vk-secondary-color);
+    color: var(--vk-tertiary-color);
+}
+
+.navbar-toggler {
+    color: var(--vk-highlight-color);
+}
+
+.navbar-toggler-icon-vk {
+    color: var(--vk-secondary-color);
+    font-size: 1.5rem;
+}
+
+.listStyling {
+    color: var(--vk-highlight-color);
+}
+
+/*END: Navbar Overrides  */
+
+/*START:Footer Styling */
+
+footer {
+    background-color: var(--vk-dark-color);
+}
+
+.footer-Text {
+    color: var(--vk-secondary-color);
+    font-size: 1.2rem;
+}
+
+.socialIcons {
+    color: var(--vk-secondary-color);
+    font-size: 1.5rem;
+}
+
+.socialIcons:hover {
+    color: var(--vk-highlight-color);
+}
+
+/*END:Footer Styling */
+
+
+/*START: App-logo Styling */
+
+.appLogo {
+    max-width: 400px;
+}
+
+/*START: App-logo Styling */
+
+/*START CheckList */
+.checkList {
+    list-style-type: none;
+}
+
+.checkList>li i {
+    color: var(--vk-highlight-color);
+    padding-right: .5rem;
+}
+
+/*END: Checklist  */
+
+
+.devIcons {
+    font-size: 4rem;
+    padding-left: .5rem;
+}
