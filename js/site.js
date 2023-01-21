@@ -4,7 +4,7 @@ function displayMessage() {
     Swal.fire(
         {
             backdrop: false,
-            title: 'App Name',
+            title: 'Divvy Up',
             text: msg
         }
     );
