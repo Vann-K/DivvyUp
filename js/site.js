@@ -1,11 +1,6 @@
-function displayMessage() {
-    let msg = document.getElementById('message').value;
+// Entry Function
+// Initial Function that happens when we press Calculate button
 
-    Swal.fire(
-        {
-            backdrop: false,
-            title: 'Divvy Up',
-            text: msg
-        }
-    );
+function {
+    let loanAmountInput = document.getElementById('loanAmountInput')
 }
