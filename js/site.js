@@ -112,7 +112,8 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
     let loanTerm = values.loanTerm;
     let month = 1;
     let balance = Number(values.loanAmount).toFixed(2);
-    let interest = Number(balance * values.interestRate / 1200).toFixed(2);
+    let interest = (balance * values.interestRate / 1200, 10).toFixed(2);
+    let totalInterest = 0;
     let principal = Number(totalMonthlyPayment - interest).toFixed(2);
     let amortizationArray = [];
 
@@ -121,7 +122,8 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
         bomBalance: Number(balance).toFixed(2),
         get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
         get principal() { return Number(totalMonthlyPayment - interest).toFixed(2) },
-        get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) }
+        get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
+
     }
 
     while (month <= loanTerm) {
@@ -131,13 +133,18 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
             bomBalance: Number(balance).toFixed(2),
             get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
             get principal() { return Number(totalMonthlyPayment - interest).toFixed(2) },
-            get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) }
+            get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
         }
 
 
         principal = amortizationObject.principal;
         interest = amortizationObject.interest;
         balance = amortizationObject.eomBalance;
+
+        totalInterest += Math.round(interest * 100) / 100;
+
+        amortizationObject.totalInterest = Math.round(totalInterest * 100) / 100;
+
 
         month = month + 1;
 
