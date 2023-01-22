@@ -177,11 +177,11 @@ function displayAmortization(amortizationArray) {
         let tableCells = amortizationRow.querySelectorAll("td");
 
         tableCells[0].textContent = currentMth.termMth;
-        tableCells[1].textContent = currentMth.tmp;
-        tableCells[2].textContent = currentMth.principal;
-        tableCells[3].textContent = currentMth.interest;
-        tableCells[4].textContent = currentMth.totalInterest;
-        tableCells[5].textContent = currentMth.eomBalance;
+        tableCells[1].textContent = parseInt(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[2].textContent = parseInt(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[3].textContent = parseInt(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[5].textContent = parseInt(currentMth.eomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
         tableBody.appendChild(amortizationRow);
 

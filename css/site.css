@@ -170,3 +170,8 @@ footer {
 
 
 /* END: Hero Grid */
+
+
+table {
+    table-layout: fixed;
+}
