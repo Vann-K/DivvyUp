@@ -36,6 +36,8 @@ function getValues() {
 
     console.log(amortizationDataArray)
 
+    displayAmortization(amortizationDataArray);
+
 
 
 
@@ -114,14 +116,14 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
     let balance = Number(values.loanAmount).toFixed(2);
     let interest = (balance * values.interestRate / 1200, 10).toFixed(2);
     let totalInterest = 0;
-    let principal = Number(totalMonthlyPayment - interest).toFixed(2);
+    let principal = 0;
     let amortizationArray = [];
 
     let amortizationObject = {
         termMth: Number(month).toFixed(2),
         bomBalance: Number(balance).toFixed(2),
         get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
-        get principal() { return Number(totalMonthlyPayment - interest).toFixed(2) },
+        get principal() { return Number(totalMonthlyPayment - this.interest).toFixed(2) },
         get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
 
     }
@@ -132,18 +134,19 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
             termMth: Number(month).toFixed(2),
             bomBalance: Number(balance).toFixed(2),
             get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
-            get principal() { return Number(totalMonthlyPayment - interest).toFixed(2) },
+            get principal() { return Number(totalMonthlyPayment - this.interest).toFixed(2) },
             get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
         }
 
 
-        principal = amortizationObject.principal;
         interest = amortizationObject.interest;
+        principal = amortizationObject.principal
         balance = amortizationObject.eomBalance;
 
         totalInterest += Math.round(interest * 100) / 100;
 
         amortizationObject.totalInterest = Math.round(totalInterest * 100) / 100;
+        amortizationObject.tmp = totalMonthlyPayment;
 
 
         month = month + 1;
@@ -157,26 +160,57 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
 }
 
 
+// Display onto Page Function
+
+function displayAmortization(amortizationArray) {
+    let tableBody = document.getElementById('tableBody');
+    const amortizationTemplate = document.getElementById('amortizationTemplate');
+
+    tableBody.innerHTML = '';
 
 
 
+    for (i = 0; i < amortizationArray.length; i++) {
+        let amortizationRow = document.importNode(amortizationTemplate.content, true);
+        let currentMth = amortizationArray[i];
 
+        let tableCells = amortizationRow.querySelectorAll("td");
 
-function remainingBalance(values, principalPayment) {
-    let remainingBalanceArray = [];
+        tableCells[0].textContent = currentMth.termMth;
+        tableCells[1].textContent = currentMth.tmp;
+        tableCells[2].textContent = currentMth.principal;
+        tableCells[3].textContent = currentMth.interest;
+        tableCells[4].textContent = currentMth.totalInterest;
+        tableCells[5].textContent = currentMth.eomBalance;
 
-
-    for (let remainingBalance = values.loanAmount; remainingBalance > 0; remainingBalance -= principalPayment) {
-
-        remainingBalanceArray.push(remainingBalance)
-
-
-
+        tableBody.appendChild(amortizationRow);
 
     }
-    return remainingBalanceArray;
+
 
 }
+
+
+
+
+
+
+
+// function remainingBalance(values, principalPayment) {
+//     let remainingBalanceArray = [];
+
+
+//     for (let remainingBalance = values.loanAmount; remainingBalance > 0; remainingBalance -= principalPayment) {
+
+//         remainingBalanceArray.push(remainingBalance)
+
+
+
+
+//     }
+//     return remainingBalanceArray;
+
+// }
 
 
 
