@@ -39,6 +39,8 @@ function getValues() {
 
     console.log(amortizationDataArray);
 
+    displayCurrentMonth(amortizationDataArray, totalMonthlyPayment, inputsObject);
+
     displayAmortization(amortizationDataArray);
 }
 
@@ -107,6 +109,20 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
 
 // Display onto Page Function
 
+function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObject) {
+    let firstMonthTMP = document.getElementById('firstMonthTMP');
+    let firstMonthPrincipal = document.getElementById('firstMonthPrincipal');
+    let firstMonthInterest = document.getElementById('firstMonthInterest');
+    let firstMonthTotalCost = document.getElementById('firstMonthTotalCost')
+    let totalInterest = Number(amortizationArray[inputsObject.loanTerm - 1].totalInterest);
+
+    firstMonthTMP.textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthPrincipal.textContent = Number(amortizationArray[0].bomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthInterest.textContent = Number(amortizationArray[inputsObject.loanTerm - 1].totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthTotalCost.textContent = Number(inputsObject.loanAmount + totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+}
+
 function displayAmortization(amortizationArray) {
     let tableBody = document.getElementById('tableBody');
     const amortizationTemplate = document.getElementById('amortizationTemplate');
@@ -115,6 +131,10 @@ function displayAmortization(amortizationArray) {
 
     let amorBtn = document.getElementById('amortizationBtn')
     amorBtn.classList.remove('invisible');
+
+
+
+
 
 
 

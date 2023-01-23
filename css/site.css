@@ -165,3 +165,8 @@ footer {
     font-size: 1rem;
     padding: 0em 1em 1em 1em;
 }
+
+
+.stockPhoto {
+    box-shadow: 16px 15px 22px 0px rgba(0, 0, 0, 0.1);
+}
