@@ -37,6 +37,8 @@ function getValues() {
     // Calculate all of the necessary 
     let amortizationDataArray = balanceInterestPrin(inputsObject, totalMonthlyPayment);
 
+    console.log(amortizationDataArray);
+
     displayAmortization(amortizationDataArray);
 }
 
@@ -71,7 +73,7 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
 
     }
 
-    while (month <= loanTerm) {
+    while (month <= loanTerm) { //piss
 
         amortizationObject = {
             termMth: Number(month).toFixed(2),
@@ -124,8 +126,8 @@ function displayAmortization(amortizationArray) {
 
         tableCells[0].textContent = parseInt(currentMth.termMth);
         tableCells[1].textContent = parseInt(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        tableCells[2].textContent = parseInt(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        tableCells[3].textContent = parseInt(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[5].textContent = parseInt(currentMth.eomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
