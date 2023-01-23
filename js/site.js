@@ -132,6 +132,10 @@ function displayAmortization(amortizationArray) {
     let amorBtn = document.getElementById('amortizationBtn')
     amorBtn.classList.remove('invisible');
 
+    let bottomHalf = document.getElementById('bottomHalf')
+
+    bottomHalf.classList.remove('invisible');
+
 
 
 
