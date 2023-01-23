@@ -20,50 +20,24 @@ function getValues() {
         interestRate: parseInt(document.getElementById('interestRateInput').value)
     }
 
+    if (isNaN(inputsObject.loanAmount) || isNaN(inputsObject.loanTerm) || isNaN(inputsObject.interestRate)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Whoops',
+            text: 'Please enter a valid number.'
+        })
+        return;
+    }
 
 
-    // Calculate functions
+    // Calculate  Total Monthly Payment, assign to variable
     let totalMonthlyPayment = Number(totalMonthly(inputsObject)).toFixed(2);
 
 
-    // let initialValuesObject = {
-    //     initialInterest: initialInterestPayment(inputsObject, totalMonthlyPayment),
-    //     initialPrincipal: initialPrincipalPayment(inputsObject, initialValuesObject.)
-    // }
-
-
+    // Calculate all of the necessary 
     let amortizationDataArray = balanceInterestPrin(inputsObject, totalMonthlyPayment);
 
-    console.log(amortizationDataArray)
-
     displayAmortization(amortizationDataArray);
-
-
-
-
-
-
-
-
-    // let interestPaymentArray = interestPayment(remainingBalanceArray)
-    // let principalPayments = principalPayment(inputsObject);
-    // let remainingBalanceArray = remainingBalance(inputsObject, principalPayments);
-
-
-    // let calculationsObject = {
-    //     totalMonthly: totalMonthlyPayment,
-    //     remainingBalance: remainingBalanceArray,
-    //     principal: principalPayments,
-    //     interest: interestPaymentArray
-    // }
-
-    // Display
-
-
-
-
-
-
 }
 
 
@@ -75,37 +49,6 @@ function totalMonthly(values) {
     let totalMonthlyPayment = values.loanAmount * (values.interestRate / 1200) / (1 - (1 + values.interestRate / 1200) ** -values.loanTerm)
 
     return totalMonthlyPayment;
-}
-
-
-function initialPrincipalPayment(totalMonthly, initialInterest) {
-
-    let initialPrincipal = totalMonthly - initialInterest;
-
-    return initialPrincipal;
-
-    // let principalPayment = totalMonthly - interestPayment()
-    // return principalPayment
-
-}
-
-function initialInterestPayment(values) {
-
-    let initialInterest = values.loanAmount * values.rate / 1200;
-
-    return initialInterest;
-
-
-
-    // for (i = 0; i < remainingBalance.length; i++) {
-
-    //     let interestPayment = remainingBalance[i] * rate / 1200;
-    //     interestArray.push(interestPayment);
-
-    // }
-
-    // return interestArray;
-
 }
 
 
@@ -168,6 +111,9 @@ function displayAmortization(amortizationArray) {
 
     tableBody.innerHTML = '';
 
+    let amorBtn = document.getElementById('amortizationBtn')
+    amorBtn.classList.remove('invisible');
+
 
 
     for (i = 0; i < amortizationArray.length; i++) {
@@ -176,7 +122,7 @@ function displayAmortization(amortizationArray) {
 
         let tableCells = amortizationRow.querySelectorAll("td");
 
-        tableCells[0].textContent = currentMth.termMth;
+        tableCells[0].textContent = parseInt(currentMth.termMth);
         tableCells[1].textContent = parseInt(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[2].textContent = parseInt(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[3].textContent = parseInt(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -189,52 +135,3 @@ function displayAmortization(amortizationArray) {
 
 
 }
-
-
-
-
-
-
-
-// function remainingBalance(values, principalPayment) {
-//     let remainingBalanceArray = [];
-
-
-//     for (let remainingBalance = values.loanAmount; remainingBalance > 0; remainingBalance -= principalPayment) {
-
-//         remainingBalanceArray.push(remainingBalance)
-
-
-
-
-//     }
-//     return remainingBalanceArray;
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function remainingBalance(values, totalMonthlyPayment) {
-//     let currentBalance = values.loanAmount;
-//     for (i = 1; i < values.loanTerm; i++) {
-//         let remainingBalance = values.loanAmount - (currentBalance - (totalMonthlyPayment - (remainingBalance * values.interestRate / 1200)))
-//     }
-
-// }
-
-
-
-
-
-
