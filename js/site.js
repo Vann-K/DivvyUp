@@ -90,7 +90,7 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
         principal = amortizationObject.principal
         balance = amortizationObject.eomBalance;
 
-        totalInterest += Math.round(interest * 100) / 100;
+        totalInterest += interest * 100 / 100;
 
         amortizationObject.totalInterest = Math.round(totalInterest * 100) / 100;
         amortizationObject.tmp = totalMonthlyPayment;
@@ -149,7 +149,7 @@ function displayAmortization(amortizationArray) {
         let tableCells = amortizationRow.querySelectorAll("td");
 
         tableCells[0].textContent = parseInt(currentMth.termMth);
-        tableCells[1].textContent = parseInt(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[1].textContent = Number(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
