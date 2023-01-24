@@ -72,26 +72,199 @@
             <div class="col col-12 col-md-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-                        function displayMessage() {
-                            let msg = document.getElementById('message').value;
-                        
-                            Swal.fire(
-                                {
-                                    backdrop: false,
-                                    title: 'Divvy Up',
-                                    text: msg
-                                }
-                            );
-                        }
+                        // Entry Function
+// Initial Function that happens when we press Calculate button
+
+function getValues() {
+
+    // Get inputs, store in object
+    let inputsObject = {
+        loanAmount: parseInt(document.getElementById('loanAmountInput').value),
+        loanTerm: parseInt(document.getElementById('loanTermInput').value),
+        interestRate: parseInt(document.getElementById('interestRateInput').value)
+    }
+
+    if (isNaN(inputsObject.loanAmount) || isNaN(inputsObject.loanTerm) || isNaN(inputsObject.interestRate)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Whoops',
+            text: 'Please enter a valid number.'
+        })
+        return;
+    }
+
+
+    // Calculate  Total Monthly Payment, assign to variable
+    let totalMonthlyPayment = totalMonthly(inputsObject);
+
+
+    // Calculate all of the necessary 
+    let amortizationDataArray = balanceInterestPrin(inputsObject, totalMonthlyPayment);
+
+
+    displayCurrentMonth(amortizationDataArray, totalMonthlyPayment, inputsObject);
+
+    displayAmortization(amortizationDataArray);
+}
+
+
+// Logic Functions
+
+function totalMonthly(values) {
+    // Calculate total monthly payment.
+
+    let totalMonthlyPayment = values.loanAmount * (values.interestRate / 1200) / (1 - (1 + values.interestRate / 1200) ** -values.loanTerm)
+
+    return totalMonthlyPayment;
+}
+
+
+function balanceInterestPrin(values, totalMonthlyPayment) {
+
+    let loanTerm = values.loanTerm;
+    let month = 1;
+    let balance = (values.loanAmount);
+    let interest = 0;
+    let totalInterest = 0;
+    let principal = 0;
+    let amortizationArray = [];
+
+    let amortizationObject = {
+        termMth: Number(month).toFixed(2),
+        bomBalance: balance,
+        get interest() { return Number(this.bomBalance * (values.interestRate / 1200)) },
+        get principal() { return Number(totalMonthlyPayment - this.interest) },
+        get eomBalance() { return Number(this.bomBalance - this.principal) },
+
+    }
+
+    while (month <= loanTerm) {
+
+        amortizationObject = {
+            termMth: Number(month).toFixed(2),
+            bomBalance: balance,
+            get interest() { return Number(this.bomBalance * (values.interestRate / 1200)) },
+            get principal() { return Number(totalMonthlyPayment - this.interest) },
+            get eomBalance() { return Number(this.bomBalance - this.principal) },
+        }
+
+
+        interest = amortizationObject.interest;
+        principal = amortizationObject.principal
+        balance = amortizationObject.eomBalance;
+
+        totalInterest += interest;
+
+        amortizationObject.totalInterest = totalInterest;
+        amortizationObject.tmp = totalMonthlyPayment;
+
+
+        month = month + 1;
+
+        amortizationArray.push(amortizationObject)
+
+    }
+
+    return amortizationArray;
+
+}
+
+
+// Display onto Page Function
+
+function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObject) {
+    let firstMonthTMP = document.getElementById('firstMonthTMP');
+    let firstMonthPrincipal = document.getElementById('firstMonthPrincipal');
+    let firstMonthInterest = document.getElementById('firstMonthInterest');
+    let firstMonthTotalCost = document.getElementById('firstMonthTotalCost')
+    let totalInterest = (amortizationArray[inputsObject.loanTerm - 1].totalInterest);
+
+    firstMonthTMP.textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthPrincipal.textContent = Number(amortizationArray[0].bomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthInterest.textContent = Number(amortizationArray[inputsObject.loanTerm - 1].totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthTotalCost.textContent = Number(inputsObject.loanAmount + totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+}
+
+
+
+function displayAmortization(amortizationArray) {
+    let tableBody = document.getElementById('tableBody');
+    const amortizationTemplate = document.getElementById('amortizationTemplate');
+
+    tableBody.innerHTML = '';
+
+    let amorBtn = document.getElementById('amortizationBtn')
+    amorBtn.classList.remove('invisible');
+
+    let bottomHalf = document.getElementById('bottomHalf')
+
+    bottomHalf.classList.remove('invisible');
+
+
+
+
+
+
+
+    for (i = 0; i < amortizationArray.length; i++) {
+        let amortizationRow = document.importNode(amortizationTemplate.content, true);
+        let currentMth = amortizationArray[i];
+
+        let tableCells = amortizationRow.querySelectorAll("td");
+
+        tableCells[0].textContent = parseInt(currentMth.termMth);
+        tableCells[1].textContent = Number(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[5].textContent = Math.abs(currentMth.eomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+        tableBody.appendChild(amortizationRow);
+
+    }
+
+
+}
                     </code>
                 </pre>
 
             </div>
             <!-- Code Description -->
             <div class="col col-12 col-md-4">
-                <p>The code is structured in one function.</p>
-                <h4><code>displayMessage()</code></h4>
-                <p>This functions displays a message in a Sweet Alert.</p>
+                <p>The code is structured in five functions.</p>
+                <h4><code class="language-js">getValues()</code></h4>
+                <p><code>getValues()</code> is our Entry Point function. First and foremost it does what it says on the
+                    label. It gets the values from the page that allows us to take in the parameters our user sets for
+                    the loan.</p>
+                <p>Then, it checks if those parameters are numbers. If they are, everything runs smoothly. If they
+                    aren't, we throw up a Sweet Alert and tell them it's a no go.</p>
+                <p>After that, it serves as the caller for our logic and display functions. Starting with
+                    <code>totalMonthlyPayment()</code> it assigns its output to a variable. Next we assign the output of
+                    <code>balanceInterestPrin()</code> to a variable to store that array. The array is filled with every
+                    object that goes onto our amortization table. We then call <code>displayCurrentMonth()</code> and
+                    <code>displayAmortization()</code> to push the calculated information to our amortization schedule.
+                </p>
+                <h4><code class="language-js">totalMonthly(values);</code></h4>
+                <p><code>totalMonthly(values)</code> is a simple function that calculates the total payment for each
+                    month and returns that. It runs only that formula given the data that was input by the user. The
+                    values parameter is the inputObject object with the contained user input. This parameter is poorly
+                    named, and would be better served as being titled inputsObject. </p>
+
+                <h4><code class="language-js">balanceInterestPrin(values, totalMonthlyPayment)</code></h4>
+                <p><code>balanceInterestPrin(values,totalMonthlyPayment)</code> This is the foundation; the main body of
+                    logic for this entire loan calculator.</p>
+                <p>First, we declare the variables necessary to do the calculations for the different aspects of the
+                    amortization schedule. These are the remaining balance, the interest, total interest, and the
+                    principal payment. Then, an empty array is created as that will be where we store the objects
+                    created by our while loop. </p>
+                <p>
+                    Next, I create the initial assignment of the 'amortization object' which will hold the values and
+                    calculations of our amortization schedule.
+                </p>
+                <p>
+                    The while loop is our factory
+                </p>
             </div>
         </div>
 

@@ -31,13 +31,12 @@ function getValues() {
 
 
     // Calculate  Total Monthly Payment, assign to variable
-    let totalMonthlyPayment = Number(totalMonthly(inputsObject)).toFixed(2);
+    let totalMonthlyPayment = totalMonthly(inputsObject);
 
 
     // Calculate all of the necessary 
     let amortizationDataArray = balanceInterestPrin(inputsObject, totalMonthlyPayment);
 
-    console.log(amortizationDataArray);
 
     displayCurrentMonth(amortizationDataArray, totalMonthlyPayment, inputsObject);
 
@@ -48,7 +47,7 @@ function getValues() {
 // Logic Functions
 
 function totalMonthly(values) {
-    // Calculate total monthly payment. (loanAmount) * (interestRate / 1200) / (1-(1+interestRate/1200)^-LoanTerm)
+    // Calculate total monthly payment.
 
     let totalMonthlyPayment = values.loanAmount * (values.interestRate / 1200) / (1 - (1 + values.interestRate / 1200) ** -values.loanTerm)
 
@@ -60,29 +59,29 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
 
     let loanTerm = values.loanTerm;
     let month = 1;
-    let balance = Number(values.loanAmount).toFixed(2);
-    let interest = (balance * values.interestRate / 1200, 10).toFixed(2);
+    let balance = (values.loanAmount);
+    let interest = 0;
     let totalInterest = 0;
     let principal = 0;
     let amortizationArray = [];
 
     let amortizationObject = {
         termMth: Number(month).toFixed(2),
-        bomBalance: Number(balance).toFixed(2),
-        get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
-        get principal() { return Number(totalMonthlyPayment - this.interest).toFixed(2) },
-        get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
+        bomBalance: balance,
+        get interest() { return Number(this.bomBalance * (values.interestRate / 1200)) },
+        get principal() { return Number(totalMonthlyPayment - this.interest) },
+        get eomBalance() { return Number(this.bomBalance - this.principal) },
 
     }
 
-    while (month <= loanTerm) { //piss
+    while (month <= loanTerm) {
 
         amortizationObject = {
             termMth: Number(month).toFixed(2),
-            bomBalance: Number(balance).toFixed(2),
-            get interest() { return Number(this.bomBalance * (values.interestRate / 1200)).toFixed(2) },
-            get principal() { return Number(totalMonthlyPayment - this.interest).toFixed(2) },
-            get eomBalance() { return Number(this.bomBalance - this.principal).toFixed(2) },
+            bomBalance: balance,
+            get interest() { return Number(this.bomBalance * (values.interestRate / 1200)) },
+            get principal() { return Number(totalMonthlyPayment - this.interest) },
+            get eomBalance() { return Number(this.bomBalance - this.principal) },
         }
 
 
@@ -90,9 +89,9 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
         principal = amortizationObject.principal
         balance = amortizationObject.eomBalance;
 
-        totalInterest += interest * 100 / 100;
+        totalInterest += interest;
 
-        amortizationObject.totalInterest = Math.round(totalInterest * 100) / 100;
+        amortizationObject.totalInterest = totalInterest;
         amortizationObject.tmp = totalMonthlyPayment;
 
 
@@ -114,7 +113,7 @@ function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObjec
     let firstMonthPrincipal = document.getElementById('firstMonthPrincipal');
     let firstMonthInterest = document.getElementById('firstMonthInterest');
     let firstMonthTotalCost = document.getElementById('firstMonthTotalCost')
-    let totalInterest = Number(amortizationArray[inputsObject.loanTerm - 1].totalInterest);
+    let totalInterest = (amortizationArray[inputsObject.loanTerm - 1].totalInterest);
 
     firstMonthTMP.textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     firstMonthPrincipal.textContent = Number(amortizationArray[0].bomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -153,7 +152,7 @@ function displayAmortization(amortizationArray) {
         tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        tableCells[5].textContent = parseInt(currentMth.eomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[5].textContent = Math.abs(currentMth.eomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
         tableBody.appendChild(amortizationRow);
 
