@@ -110,7 +110,7 @@ function getValues() {
 
 // Logic Functions
 
-function totalMonthly(values) {
+<span id="totalMonthlyCode">function totalMonthly(values)</span> {
     // Calculate total monthly payment.
 
     let totalMonthlyPayment = values.loanAmount * (values.interestRate / 1200) / (1 - (1 + values.interestRate / 1200) ** -values.loanTerm)
@@ -232,26 +232,55 @@ function displayAmortization(amortizationArray) {
             </div>
             <!-- Code Description -->
             <div class="col col-12 col-md-4">
-                <p>The code is structured in five functions.</p>
+                <p>The code is structured in five functions. Called functions will be detailed in their own sections.
+                    Click a headline to scroll to that section of the code.</p>
                 <h4><code class="language-js">getValues()</code></h4>
                 <p><code>getValues()</code> is our Entry Point function. First and foremost it does what it says on the
-                    label. It gets the values from the page that allows us to take in the parameters our user sets for
-                    the loan.</p>
-                <p>Then, it checks if those parameters are numbers. If they are, everything runs smoothly. If they
-                    aren't, we throw up a Sweet Alert and tell them it's a no go.</p>
-                <p>After that, it serves as the caller for our logic and display functions. Starting with
-                    <code>totalMonthlyPayment()</code> it assigns its output to a variable. Next we assign the output of
-                    <code>balanceInterestPrin()</code> to a variable to store that array. The array is filled with every
-                    object that goes onto our amortization table. We then call <code>displayCurrentMonth()</code> and
-                    <code>displayAmortization()</code> to push the calculated information to our amortization schedule.
+                    label. I create a variable and name it <code>inputsObject</code> and assign to it three properties
+                    <code>loanAmount:<br />
+                        loanTerm:<br />
+                        interestRate:</code><br />
+
+                    These properties are each assigned the value of an input from the page while also being converted
+                    into an integer. This is done in a few parts. It starts with <code class=>parseInt()</code> which is
+                    a function that takes a string passed into it<small> (everything grabbed from the document comes in
+                        as a string)</small> and
+                    converts it into an integer. Then <code>document.getElementById('')</code> is used to communicate
+                    with our HTML page(document) and then grab an assigned ID. We conclude with a .value to grab the
+                    user input (or assigned) value of the input field.
                 </p>
-                <h4><code class="language-js">totalMonthly(values);</code></h4>
+                <p>Sometimes however, a user does a thing you don't want them to do, so we have to check to make sure
+                    that what they've input is a number. This brings us to our if statement.
+                    <code>if(conditons){code}</code> is the syntax for an if statement. We give it conditions within the
+                    parentheses and code to execute in the curly brackets. For this one we give three possible
+                    conditions. They all work the same and are separated by the logical OR operator(||). Let's go over
+                    the syntax.
+                    <code>isNaN()</code> is a function that takes an argument and determines if it is a number. We
+                    pass in each of our inputs into one of this isNaN functions and check them. If either of them is not
+                    a number we give the user a Sweet Alert to keep them from being confused.
+                </p>
+                <p>After all of that, we call in a few more functions and assign a few more variables to do the logic
+                    and display of our amortization data. First we create the <code>totalMonthlyPayment</code> variable
+                    and assign to that the returned value from the
+                    <code><a href="#totalMonthlySection" class="text-decoration-none">totalMonthly()</a></code> function
+                    which has the
+                    <code>inputsObject</code> passaed into it from above. Another variable,
+                    <code>amortizationDataArray</code>, is created and assigned ot it is the output returned from our
+                    major calulation function <code>balanceInterestPrin</code> which has the variables
+                    <code>inputsObject</code> and <code>totalMonthlyPayment</code> passed into it. Much the same happens
+                    with the next two called functions. These are our display functions that push all this data onto the
+                    document.
+                </p>
+                <a href="#totalMonthlyCode">
+                    <h4 id="totalMonthlySection"><code class="language-js">totalMonthly(values);</code></h4>
+                </a>
                 <p><code>totalMonthly(values)</code> is a simple function that calculates the total payment for each
                     month and returns that. It runs only that formula given the data that was input by the user. The
                     values parameter is the inputObject object with the contained user input. This parameter is poorly
                     named, and would be better served as being titled inputsObject. </p>
 
-                <h4><code class="language-js">balanceInterestPrin(values, totalMonthlyPayment)</code></h4>
+                <h4 id="balanceInterestPrinSection"><code
+                        class="language-js">balanceInterestPrin(values, totalMonthlyPayment)</code></h4>
                 <p><code>balanceInterestPrin(values,totalMonthlyPayment)</code> This is the foundation; the main body of
                     logic for this entire loan calculator.</p>
                 <p>First, we declare the variables necessary to do the calculations for the different aspects of the
@@ -263,7 +292,11 @@ function displayAmortization(amortizationArray) {
                     calculations of our amortization schedule.
                 </p>
                 <p>
-                    The while loop is our factory
+                    The while loop is our factory. This bad boy runs through every month of our amortization
+                    schedule. We assign the amortizationObject again with the same parameters since we want that
+                    original initilization except now we can reference inside of itself. We grab the
+                    termMth value whih is simply the term of our loan. Then our beginning of month balance(bomBalance)
+                    which is just the balance variable passsed in from outside of the loop.
                 </p>
             </div>
         </div>
