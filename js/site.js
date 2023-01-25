@@ -65,7 +65,7 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
     let principal = 0;
     let amortizationArray = [];
 
-    let amortizationObject = {};
+    let amortizationObject = {}
 
     while (month <= loanTerm) {
 
