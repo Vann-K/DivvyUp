@@ -75,7 +75,7 @@
                         // Entry Function
 // Initial Function that happens when we press Calculate button
 
-function getValues() {
+<a href="#getValuesSection" class="text-decoration-none" id="getValuesCode">function getValues() {</a>
 
     // Get inputs, store in object
     let inputsObject = {
@@ -110,7 +110,7 @@ function getValues() {
 
 // Logic Functions
 
-<span id="totalMonthlyCode">function totalMonthly(values)</span> {
+<a href="#totalMonthlySection" class="text-decoration-none"><span id="totalMonthlyCode">function totalMonthly(values)</span></a> {
     // Calculate total monthly payment.
 
     let totalMonthlyPayment = values.loanAmount * (values.interestRate / 1200) / (1 - (1 + values.interestRate / 1200) ** -values.loanTerm)
@@ -119,7 +119,7 @@ function getValues() {
 }
 
 
-function balanceInterestPrin(values, totalMonthlyPayment) {
+<a href="#bIPSection" class="text-decoration-none" id="bIPCode">function balanceInterestPrin(values, totalMonthlyPayment) {</a>
 
     let loanTerm = values.loanTerm;
     let month = 1;
@@ -172,7 +172,7 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
 
 // Display onto Page Function
 
-function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObject) {
+<a href="#dCMSection" class="text-decoration-none" id="dCMCode">function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObject) {</a>
     let firstMonthTMP = document.getElementById('firstMonthTMP');
     let firstMonthPrincipal = document.getElementById('firstMonthPrincipal');
     let firstMonthInterest = document.getElementById('firstMonthInterest');
@@ -188,7 +188,7 @@ function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObjec
 
 
 
-function displayAmortization(amortizationArray) {
+<a href="dAmorSection" class="text-decoration-none" id="dAmorCode">function displayAmortization(amortizationArray) {</a>
     let tableBody = document.getElementById('tableBody');
     const amortizationTemplate = document.getElementById('amortizationTemplate');
 
@@ -233,8 +233,11 @@ function displayAmortization(amortizationArray) {
             <!-- Code Description -->
             <div class="col col-12 col-md-4">
                 <p>The code is structured in five functions. Called functions will be detailed in their own sections.
-                    Click a headline to scroll to that section of the code.</p>
-                <h4><code class="language-js">getValues()</code></h4>
+                    Click a <code class="language-js">headline()</code> to scroll to that section of the code. And click
+                    the function name to scroll to the write up.</p>
+                <a href="#getValuesCode">
+                    <h4 id="getValuesSection"><code class="language-js">getValues()</code></h4>
+                </a>
                 <p><code>getValues()</code> is our Entry Point function. First and foremost it does what it says on the
                     label. I create a variable and name it <code>inputsObject</code> and assign to it three properties
                     <code>loanAmount:<br />
@@ -262,7 +265,7 @@ function displayAmortization(amortizationArray) {
                 <p>After all of that, we call in a few more functions and assign a few more variables to do the logic
                     and display of our amortization data. First we create the <code>totalMonthlyPayment</code> variable
                     and assign to that the returned value from the
-                    <code><a href="#totalMonthlySection" class="text-decoration-none">totalMonthly()</a></code> function
+                    <code>totalMonthly()</code> function
                     which has the
                     <code>inputsObject</code> passaed into it from above. Another variable,
                     <code>amortizationDataArray</code>, is created and assigned ot it is the output returned from our
@@ -271,16 +274,17 @@ function displayAmortization(amortizationArray) {
                     with the next two called functions. These are our display functions that push all this data onto the
                     document.
                 </p>
-                <a href="#totalMonthlyCode">
-                    <h4 id="totalMonthlySection"><code class="language-js">totalMonthly(values);</code></h4>
+                <a href="#totalMonthlyCode" class="text-decoration-none">
+                    <h4 id="totalMonthlySection"><code class="language-js">totalMonthly();</code></h4>
                 </a>
                 <p><code>totalMonthly(values)</code> is a simple function that calculates the total payment for each
                     month and returns that. It runs only that formula given the data that was input by the user. The
                     values parameter is the inputObject object with the contained user input. This parameter is poorly
                     named, and would be better served as being titled inputsObject. </p>
 
-                <h4 id="balanceInterestPrinSection"><code
-                        class="language-js">balanceInterestPrin(values, totalMonthlyPayment)</code></h4>
+                <a href="#bIPCode" class="text-decoration-none" id="bIPSection">
+                    <h4 id="balanceInterestPrinSection"><code class="language-js">balanceInterestPrin()</code></h4>
+                </a>
                 <p><code>balanceInterestPrin(values,totalMonthlyPayment)</code> This is the foundation; the main body of
                     logic for this entire loan calculator.</p>
                 <p>First, we declare the variables necessary to do the calculations for the different aspects of the
