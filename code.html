@@ -322,13 +322,6 @@
                     This is our totalInterest variable, it is used to hold the value of interest summed up over the term
                     and then pushed into the amortization object further on.</p>
 
-                <p>
-                    <code>principal<br>
-                        </code>
-                    This is our principal variable. This will be used to assist in the calculations of interest, as well
-                    as holding this variable outside of the while loop.
-                </p>
-
                 <p>We have two more variables to declare here. These will be two storage variables that our function
                     will push data into.
                 </p>
@@ -342,28 +335,131 @@
                     <code>amortizationObject<br>
                         </code>
                     This empty object will be where we store all the data necessary to be displayed for amortization. It
-                    was necessary to have this declared before the information was put into it for the way that we
+                    was necessary to have this declared before the information was put into it for the way that we want
+                    to calculate later.
                     calculate it.
                 </p>
                 <p>
-                    Next, I create the initial assignment of the 'amortization object' which will hold the values and
-                    calculations of our amortization schedule.
+                    The while loop is our assembly line, a small scale factory whose job is calculate the different
+                    aspects of the amortization schedule. A while loop executes over and over again as long as its
+                    condition is true. For this one one, we used the condition <code>(month <= loanTerm)</code>. This
+                    says that so long as it is true that the variable <code>month</code> is less than or equal to the
+                    variable <code>loanTerm</code>, keep running. We use <code><=</code> to ensure that we do this for
+                    every month of the loan term, including the last one.
                 </p>
                 <p>
-                    The while loop is our factory. This bad boy runs through every month of our amortization
-                    schedule. We assign the amortizationObject again with the same parameters since we want that
-                    original initilization except now we can reference inside of itself. We grab the
-                    termMth value whih is simply the term of our loan. Then our beginning of month balance(bomBalance)
-                    which is just the balance variable passsed in from outside of the loop.
+                    Here is my favorite part, the amortizationObject. This object was initialized before and outside of
+                    the
+                    while loop for the following reasons:
+                <ul>
+                    <li>Creating it outside the while loop means we're not creating a new variable each time that we run
+                        it.
+                    </li>
+                    <li>
+                        Most importantly, I wanted the calculation to all be done within the object itself. There are
+                        perhaps better ways to do this but I wanted to experiment with having the majority of this
+                        contained within the object.
+                    </li>
+                </ul>
                 </p>
+                <p>
+                    We can break this down further however. Let's take a look at each individual aspect of the
+                    object.<br />
+                </p>
+                <p><code>termMth<br></code>
+                    This is the property used to store the number of the month that the object is gathering the
+                    information for. This variable is assigned the value of <code>month</code>, from outside of the
+                    while loop.
+                </p>
+                <p><code>bomBalance<br></code>
+                    bomBalance, or Beginning of Month Balance, pulls in a value from the <code>balance</code> variable
+                    outside of the while loop. This represents the value at, not shockingly, the beginning of the month.
+                    <code>bomBalance</code> is is used to calculate the next three properties created in this object.
+                </p>
+                <p><code>interest<br></code>
+                    Here is where the fun truly begins. We use the get syntax, or getter as it's known, to bind the
+                    object's property to a function. This allows us to reference the other object's properties within
+                    the object itself! With interest, we reference the bomBalance, times it by the interest rate and get
+                    the interest part of the monthly payment. This value is returned and stored, then the code doesn't
+                    run until it is called upon again.
+                </p>
+                <p><code>principal<br></code>
+                    This is the exact same as interest, but now with the getter we are able to reference the interest
+                    above. We return that math and that value is given to the property. This gets us the principal
+                    portion of our total monthly payment.
+                </p>
+                <p><code>eomBalance<br></code>
+                    Third verse same as the first. This one represents the end of month balance and further down we use
+                    it to set the beginning of the month balance for the next iteration of the while loop.
+                </p>
+                <p>
+                    The rest of the while loop is fairly simple. <code>interest</code> and <code>balance</code> update
+                    the variables with what is inside the <code>amortizationObject</code>. Then,
+                    <code>totalInterest</code> adds the value of interest to itself after interest is updated from the
+                    object. We then add total interest paid so far to each instance of the amortization object. We push
+                    that whole object into our <code>amortizationArray</code> and then increase month by one. After the
+                    while loop runs through the entire loan term, we return our <code>amortizationArray</code> to be
+                    used for all of our display.
+                </p>
+
+
 
                 <a href="#dCMCode" class="text-decoration-none" id="dCMSection">
                     <h4 id="balanceInterestPrinSection"><code class="language-js">displayCurrentMonth()</code></h4>
                 </a>
+                <p>
+                    Here is the start of our display functions. <code>displayCurrentMonth()</code> takes in a new
+                    parameter and two familiar ones. <code>amortizationArray</code> is the value passed in after we
+                    gather that array from <code>balanceInterestPrin</code> in <code>getValues()</code>. We also pass
+                    into this one our <code>totalMonthlyPayment</code> which holds the value from our
+                    <code>totalMonthly()</code> function. Finally we pass in our <code>inputsObject</code> which holds
+                    our initial values, parsed into integers.
+                </p>
+
+                <p>
+                    We have a number of variables in this section. They are:<br />
+                <p><code>firstMonthTMP<br></code>
+                    This variable represents the 'firstMonthTMP' element of our document.
+                </p>
+                <p><code>firstMonthPrincipal<br></code>
+                    This variable represents the 'firstMonthPrincipal' element of our document.
+                </p>
+                <p><code>firstMonthInterest<br></code>
+                    This variable represents the 'firstMonthInterest' element of our document.
+                </p>
+                <p><code>firstMonthTotalCost<br></code>
+                    This variable represents the 'firstMonthTotalCost' element of our document.
+                </p>
+                Next, we do a very typical process of assigning value to a document element's text content. we use
+                <code> .textContent</code> to fill in the text. The <code> .toLocaleString</code> and its parameters are
+                there to stylize the numbers as currency, specifically USD with the US english language. We use
+                <code>Number()</code> to construct a number based on the information passed into it.
+                </p>
 
                 <a href="#dAmorCode" class="text-decoration-none" id="dAmorSection">
                     <h4 id="balanceInterestPrinSection"><code class="language-js">displayAmortization()</code></h4>
                 </a>
+                <p>
+                    Last but not least, we come to our major display function. <code>displayAmortization()</code> is
+                    what creates our entire table on the page.
+                </p>
+                <p>
+                    <code>tableBody</code><br>
+                    This variable represents the element of our document with the id of 'tableBody'.
+                    We then clear/reset whatever HTML was inside of the tableBody.
+                </p>
+                <p>
+                    <code>bottomHalf</code><br>
+                    This variable represents the element of our document with the id of 'bottomHalf'. This is everything
+                    below the parameters. We use <code>.classList</code> to
+                    access a list of all the classes associated with this element. <code>.remove</code> then removes the
+                    "invisible" class to make this element visible.
+                </p>
+                <p>
+                    The major part of this function is our for loop. This willi build each row of our amortization
+                    schedule table. First, we assign <code>amortizationRow</code> with an imported node which is our
+                    amortization template. This was created on the html document. Then we assign
+                </p>
             </div>
         </div>
 

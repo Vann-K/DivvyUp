@@ -115,12 +115,7 @@ function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObjec
 
 function displayAmortization(amortizationArray, totalMonthlyPayment) {
     let tableBody = document.getElementById('tableBody');
-    const amortizationTemplate = document.getElementById('amortizationTemplate');
-
     tableBody.innerHTML = '';
-
-    let amorBtn = document.getElementById('amortizationBtn')
-    amorBtn.classList.remove('invisible');
 
     let bottomHalf = document.getElementById('bottomHalf')
 
