@@ -234,7 +234,7 @@
             <div class="col col-12 col-md-4">
                 <p>The code is structured in five functions. Called functions will be detailed in their own sections.
                     Click a <code class="language-js">headline()</code> to scroll to that section of the code. And click
-                    the function name to scroll to the write up section.</p>
+                    the function name within the code to scroll to that write up section.</p>
                 <p>All code could use refactoring and since the
                     time of this writing I have found new and even more interesting ways to handle a lot of this data.
                 </p>
@@ -252,7 +252,8 @@
                     a function that takes a string passed into it<small> (everything grabbed from the document comes in
                         as a string)</small> and
                     converts it into an integer. Then <code>document.getElementById('')</code> is used to communicate
-                    with our HTML page(document) and then grab an assigned ID. We conclude with a .value to grab the
+                    with our HTML page(document) and then grab an assigned ID. We conclude with a <code>.value</code> to
+                    grab the
                     user input (or assigned) value of the input field.
                 </p>
                 <p>Sometimes however, a user does a thing you don't want them to do, so we have to check to make sure
@@ -261,8 +262,10 @@
                     parentheses and code to execute in the curly brackets. For this one we give three possible
                     conditions. They all work the same and are separated by the logical OR operator(||). Let's go over
                     the syntax.
-                    <code>isNaN()</code> is a function that takes an argument and determines if it is a number. We
-                    pass in each of our inputs into one of this isNaN functions and check them. If either of them is not
+                    <code>isNaN()</code><small>(is Not a Number)</small> is a function that takes an argument and
+                    determines if it is a number. We
+                    pass in each of our inputs into one of these isNaN functions and check them. If either of them is
+                    not
                     a number we give the user a Sweet Alert to keep them from being confused.
                 </p>
                 <p>After all of that, we call in a few more functions and assign a few more variables to do the logic
@@ -270,12 +273,12 @@
                     and assign to that the returned value from the
                     <code>totalMonthly()</code> function
                     which has the
-                    <code>inputsObject</code> passaed into it from above. Another variable,
-                    <code>amortizationDataArray</code>, is created and assigned ot it is the output returned from our
-                    major calulation function <code>balanceInterestPrin</code> which has the variables
+                    <code>inputsObject</code> passed into it from above. Another variable,
+                    <code>amortizationDataArray</code>, is created. Assigned to it is the output returned from our
+                    major calculation function <code>balanceInterestPrin</code> which has the variables
                     <code>inputsObject</code> and <code>totalMonthlyPayment</code> passed into it. Much the same happens
-                    with the next two called functions; <code>displayCurrentMonth()</code> and
-                    <code>displayAmortization()</code> These are our display functions. They are both passed the
+                    with the next two called functions: <code>displayCurrentMonth()</code> and
+                    <code>displayAmortization()</code>. These are our display functions. They are both passed the
                     recently created array of amortization data as well as some of the other data to fill out the table
                     and first month card. Once those have been called and completed, the program is done and the user
                     should have acces to all the information necessary.
@@ -337,14 +340,13 @@
                     This empty object will be where we store all the data necessary to be displayed for amortization. It
                     was necessary to have this declared before the information was put into it for the way that we want
                     to calculate later.
-                    calculate it.
                 </p>
                 <p>
-                    The while loop is our assembly line, a small scale factory whose job is calculate the different
+                    The while loop is our assembly line, a small scale factory whose job is to calculate the different
                     aspects of the amortization schedule. A while loop executes over and over again as long as its
                     condition is true. For this one one, we used the condition <code>(month <= loanTerm)</code>. This
                     says that so long as it is true that the variable <code>month</code> is less than or equal to the
-                    variable <code>loanTerm</code>, keep running. We use <code><=</code> to ensure that we do this for
+                    variable <code>loanTerm</code>, keep executing. We use <code><=</code> to ensure that we do this for
                     every month of the loan term, including the last one.
                 </p>
                 <p>
@@ -374,12 +376,13 @@
                 <p><code>bomBalance<br></code>
                     bomBalance, or Beginning of Month Balance, pulls in a value from the <code>balance</code> variable
                     outside of the while loop. This represents the value at, not shockingly, the beginning of the month.
-                    <code>bomBalance</code> is is used to calculate the next three properties created in this object.
+                    <code>bomBalance</code> is used to calculate the next three properties created in this object.
                 </p>
                 <p><code>interest<br></code>
                     Here is where the fun truly begins. We use the get syntax, or getter as it's known, to bind the
                     object's property to a function. This allows us to reference the other object's properties within
-                    the object itself! With interest, we reference the bomBalance, times it by the interest rate and get
+                    the object itself! With interest, we reference the <code>bomBalance</code>, times it by the interest
+                    rate and get
                     the interest part of the monthly payment. This value is returned and stored, then the code doesn't
                     run until it is called upon again.
                 </p>
@@ -447,7 +450,9 @@
                 <p>
                     <code>tableBody</code><br>
                     This variable represents the element of our document with the id of 'tableBody'.
-                    We then clear/reset whatever HTML was inside of the tableBody.
+                    We then clear/reset whatever HTML was inside of the <code>tableBody</code> with
+                    <code>.innerHTML = ''</code>. This is just in case there is anything in there, we want a fresh start
+                    for our amortization data.
                 </p>
                 <p>
                     <code>bottomHalf</code><br>
@@ -470,14 +475,16 @@
                     and is why we can push data into each of the <code>&lt;td></code> with bracket notation below.
                 </p>
                 <p>
-                    Next comes our table assembly. Each <code>tableCells[]</code> entries is given a different part of
-                    the list of <code>&lt;td></code>. We then used <code>.textContent</code> to fill that
-                    <code>&lt;td></code> with assigned value. We do this for the term month, the total monthly payment,
+                    Next comes our table assembly. Each <code>tableCells[]</code> entries is given a different index
+                    value <small>(0-5)</small> of
+                    the array of <code>&lt;td></code>. We then used <code>.textContent</code> to fill that
+                    <code>&lt;td></code> with an assigned value. We do this for the term month, the total monthly
+                    payment,
                     the principal payment, the interest payment, the total interest paid so far, and the remaining
                     balance on the loan.
                 </p>
                 <p>
-                    The last step is to put that back onto into our table with <code>.appendChild</code>. This happens
+                    The last step is to put that back into our table with <code>.appendChild</code>. This happens
                     every loop, so we end up with a populated table that is viewable on the page. Our calculations are
                     complete, our table is viewable, and our user can see how much they'll be paying on their loan.
                 </p>
