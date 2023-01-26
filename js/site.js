@@ -40,7 +40,7 @@ function getValues() {
 
     displayCurrentMonth(amortizationDataArray, totalMonthlyPayment, inputsObject);
 
-    displayAmortization(amortizationDataArray);
+    displayAmortization(amortizationDataArray, totalMonthlyPayment);
 }
 
 
@@ -62,35 +62,33 @@ function balanceInterestPrin(values, totalMonthlyPayment) {
     let balance = (values.loanAmount);
     let interest = 0;
     let totalInterest = 0;
-    let principal = 0;
-    let amortizationArray = [];
 
-    let amortizationObject = {}
+    // Storage Variables
+    let amortizationArray = [];
+    let amortizationObject = {};
 
     while (month <= loanTerm) {
 
         amortizationObject = {
-            termMth: Number(month),
+            termMth: month,
             bomBalance: balance,
-            get interest() { return Number(this.bomBalance * (values.interestRate / 1200)) },
-            get principal() { return Number(totalMonthlyPayment - this.interest) },
-            get eomBalance() { return Number(this.bomBalance - this.principal) },
+            get interest() { return this.bomBalance * (values.interestRate / 1200) },
+            get principal() { return totalMonthlyPayment - this.interest },
+            get eomBalance() { return this.bomBalance - this.principal },
         }
 
 
         interest = amortizationObject.interest;
-        principal = amortizationObject.principal
         balance = amortizationObject.eomBalance;
 
         totalInterest += interest;
 
         amortizationObject.totalInterest = totalInterest;
-        amortizationObject.tmp = totalMonthlyPayment;
 
-
-        month = month + 1;
 
         amortizationArray.push(amortizationObject)
+
+        month = month + 1;
 
     }
 
@@ -108,14 +106,14 @@ function displayCurrentMonth(amortizationArray, totalMonthlyPayment, inputsObjec
     let firstMonthTotalCost = document.getElementById('firstMonthTotalCost')
     let totalInterest = (amortizationArray[inputsObject.loanTerm - 1].totalInterest);
 
-    firstMonthTMP.textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    firstMonthPrincipal.textContent = Number(amortizationArray[0].bomBalance).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    firstMonthInterest.textContent = Number(amortizationArray[inputsObject.loanTerm - 1].totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthTMP.textContent = totalMonthlyPayment.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthPrincipal.textContent = amortizationArray[0].bomBalance.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    firstMonthInterest.textContent = amortizationArray[inputsObject.loanTerm - 1].totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     firstMonthTotalCost.textContent = Number(inputsObject.loanAmount + totalInterest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
 }
 
-function displayAmortization(amortizationArray) {
+function displayAmortization(amortizationArray, totalMonthlyPayment) {
     let tableBody = document.getElementById('tableBody');
     const amortizationTemplate = document.getElementById('amortizationTemplate');
 
@@ -141,7 +139,7 @@ function displayAmortization(amortizationArray) {
         let tableCells = amortizationRow.querySelectorAll("td");
 
         tableCells[0].textContent = parseInt(currentMth.termMth);
-        tableCells[1].textContent = Number(currentMth.tmp).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        tableCells[1].textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[4].textContent = currentMth.totalInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
