@@ -441,7 +441,8 @@
                 </a>
                 <p>
                     Last but not least, we come to our major display function. <code>displayAmortization()</code> is
-                    what creates our entire table on the page.
+                    what creates our entire table on the page. We pass in the parameters of
+                    <code>amortizationArray</code> and <code>totalMonthlyPayment</code>.
                 </p>
                 <p>
                     <code>tableBody</code><br>
@@ -456,9 +457,29 @@
                     "invisible" class to make this element visible.
                 </p>
                 <p>
-                    The major part of this function is our for loop. This willi build each row of our amortization
+                    The major part of this function is our for loop. This will build each row of our amortization
                     schedule table. First, we assign <code>amortizationRow</code> with an imported node which is our
-                    amortization template. This was created on the html document. Then we assign
+                    amortization template. This was created on the html document. Then we assign <code>currentMth</code>
+                    the value of our <code>amortizationArray[i]</code>. This will be what grabs each object in our
+                    array.
+                </p>
+                <p>
+                    Next, we declare <code>tableCells</code> and assign it the value of
+                    <code>amortizationRow.querySelectorAll("td")</code>. The <code>.querySelectorAll("td")</code> grabs
+                    every element matching the selector and returns it as a static NodeList. This is similar to an array
+                    and is why we can push data into each of the <code>&lt;td></code> with bracket notation below.
+                </p>
+                <p>
+                    Next comes our table assembly. Each <code>tableCells[]</code> entries is given a different part of
+                    the list of <code>&lt;td></code>. We then used <code>.textContent</code> to fill that
+                    <code>&lt;td></code> with assigned value. We do this for the term month, the total monthly payment,
+                    the principal payment, the interest payment, the total interest paid so far, and the remaining
+                    balance on the loan.
+                </p>
+                <p>
+                    The last step is to put that back onto into our table with <code>.appendChild</code>. This happens
+                    every loop, so we end up with a populated table that is viewable on the page. Our calculations are
+                    complete, our table is viewable, and our user can see how much they'll be paying on their loan.
                 </p>
             </div>
         </div>

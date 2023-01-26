@@ -133,7 +133,7 @@ function displayAmortization(amortizationArray, totalMonthlyPayment) {
 
         let tableCells = amortizationRow.querySelectorAll("td");
 
-        tableCells[0].textContent = parseInt(currentMth.termMth);
+        tableCells[0].textContent = currentMth.termMth;
         tableCells[1].textContent = Number(totalMonthlyPayment).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[2].textContent = Number(currentMth.principal).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         tableCells[3].textContent = Number(currentMth.interest).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
