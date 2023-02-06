@@ -65,7 +65,7 @@ footer {
     font-weight: 600;
     color: var(--vk-dark-color) !important;
     border-bottom: 2px solid #0f2029;
-    font-family: 'Encoda Sans Condensed', sans-serif;
+    font-family: 'Encode Sans Condensed', sans-serif;
 }
 
 #mainNav button {
@@ -100,7 +100,7 @@ footer {
 
 .footer-Text {
     color: var(--vk-dark-color);
-    font-family: 'Encoda Sans Condensed', sans-serif;
+    font-family: 'Encode Sans Condensed', sans-serif;
 
     font-size: 1.2rem;
 }
