@@ -1,14 +1,26 @@
 :root {
-    --vk-primary-color: #0681AC;
-    --vk-secondary-color: #8eb897;
-    --vk-tertiary-color: #d3c0d2;
-    --vk-highlight-color: #FFCB47;
+    --vk-primary-color: #44195e;
+    --vk-secondary-color: #aad1f1;
+    --vk-tertiary-color: #8faebf;
+    --vk-highlight-color: #f9d877;
 
     --vk-nav-toggler-color: var(--vk-highlight-color);
     --vk-nav-toggler-glow: rgba(250, 225, 120, .55);
 
-    --vk-dark-color: #090909;
-    --vk-light-color: #f5f5f5;
+    --vk-dark-color: #0f2029;
+    --vk-light-color: #d2e8f8;
+
+    --vk-background-color: #e7f2f7;
+
+    --vk-title-font: 'Bebas Neue', sans-serif;
+    --vk-subtitle-font: 'Fira Sans', sans-serif;
+    --vk-heading-font: 'Bebas Neue', sans-serif;
+    --vk-body-font: 'Roboto', sans-serif;
+
+    --vk-font-size: 1.2rem;
+    --vk-font-weight: 400;
+    --vk-line-height: 1.5rem;
+    --vk-title-color: #f9d877;
 }
 
 /*START Sticky Footer */
@@ -20,13 +32,24 @@ body {
 body {
     display: flex;
     flex-direction: column;
-    background-color: var(--vk-light-color);
+    background-color: var(--vk-dark-color);
     font-family: 'Libre Baskerville', sans-serif;
+}
+
+code {
+    color: #ddc271;
+
+}
+
+#codeBody {
+    font-family: 'Encode Sans Condensed', sans-serif;
+    background-color: var(--vk-dark-color);
 }
 
 main {
     flex: 1 0 auto;
-    margin-top: 1rem;
+    background-color: var(--vk-tertiary-color);
+
 }
 
 footer {
@@ -37,26 +60,28 @@ footer {
 
 /*START: Navbar Overrides  */
 
-.navbar-brand {
-    color: var(--vk-secondary-color);
-}
-
 #mainNav {
-    background-color: var(--vk-dark-color);
-    color: var(--vk-tertiary-color);
+    background: var(--vk-secondary-color);
+    font-weight: 600;
+    color: var(--vk-dark-color) !important;
+    border-bottom: 2px solid #0f2029;
+    font-family: 'Encoda Sans Condensed', sans-serif;
 }
 
 #mainNav button {
-    border-color: var(--vk-secondary-color);
-    color: var(--vk-tertiary-color);
+    border-color: var(--vk-dark-color);
+    border-width: 2px;
+
 }
 
 .navbar-toggler {
-    color: var(--vk-highlight-color);
+    color: var(--vk-nav-toggler-glow)
 }
 
 .navbar-toggler-icon-vk {
-    color: var(--vk-secondary-color);
+    color: var(--vk-dark-color);
+    display: inline-block;
+    vertical-align: middle;
     font-size: 1.5rem;
 }
 
@@ -69,16 +94,17 @@ footer {
 /*START:Footer Styling */
 
 footer {
-    background-color: var(--vk-dark-color);
+    background-color: var(--vk-secondary-color);
+    border-top: 2px solid var(--vk-dark-color);
 }
 
 .footer-Text {
-    color: var(--vk-secondary-color);
+    color: var(--vk-dark-color);
     font-size: 1.2rem;
 }
 
 .socialIcons {
-    color: var(--vk-secondary-color);
+    color: var(--vk-dark-color);
     font-size: 1.5rem;
 }
 
@@ -103,7 +129,7 @@ footer {
 }
 
 .checkList>li i {
-    color: var(--vk-highlight-color);
+    color: var(--vk-dark-color);
     padding-right: .5rem;
 }
 
@@ -123,7 +149,7 @@ footer {
     grid-template-columns: 2;
     gap: 10px;
 
-    background-color: rgba(6, 129, 172, .6);
+    background-color: #4580a3;
     border-radius: 4rem;
     box-shadow: 16px 15px 22px 0px rgba(0, 0, 0, 0.1);
 
@@ -169,4 +195,25 @@ footer {
 
 .stockPhoto {
     box-shadow: 16px 15px 22px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: var(--vk-secondary-color) !important;
+    border-color: var(--vk-secondary-color);
+    color: white !important;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1) !important;
+    border-color: var(--vk-highlight-color);
+    border-width: 2px;
+}
+
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    /*Active- pressed, visited-visited in the past, focus- focused on with tab. */
+    filter: brightness(1.1) !important;
+    border-color: var(--vk-highlight-color);
 }
