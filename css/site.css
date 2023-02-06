@@ -100,6 +100,8 @@ footer {
 
 .footer-Text {
     color: var(--vk-dark-color);
+    font-family: 'Encoda Sans Condensed', sans-serif;
+
     font-size: 1.2rem;
 }
 
