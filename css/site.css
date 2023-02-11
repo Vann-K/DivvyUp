@@ -20,7 +20,8 @@
     --vk-font-size: 1.2rem;
     --vk-font-weight: 400;
     --vk-line-height: 1.5rem;
-    --vk-code-color: #ddc271;
+    --vk-code-color: #645201;
+    /* --vk-code-color: #ddc271; */
 }
 
 /*START Sticky Footer */
@@ -37,7 +38,7 @@ body {
 }
 
 code {
-    color: #ddc271;
+    color: var(--vk-code-color);
 
 }
 
